@@ -50,20 +50,17 @@ TAVILY_API_KEY=your_tavily_api_key_here
 Run the agent:
 
 ```bash
-npm start
-```
-
-or
-
-```bash
 node agent.js
 ```
 
-The agent will process the predefined query and output the assistant's response:
+The agent will start an interactive chat session. Enter your queries, and the agent will respond using available tools. Type "Bye" to exit.
+
+Example interaction:
 
 ```
-Assistant : When was Claude Opus model launched?
-[Agent response with web search results]
+You: What is the weather today?
+Assistant: [Agent response using tools if needed]
+You: Bye
 ```
 
 ## How It Works
@@ -93,6 +90,10 @@ LLM - Response Synthesis
     ↓
 Final Response
 ```
+
+### Memory and Persistence
+
+The agent uses LangGraph's `MemorySaver` to maintain conversation history across interactions within the same session, allowing for context-aware multi-turn conversations.
 
 ## Configuration
 
@@ -146,18 +147,18 @@ tools: [search, calendarEvents, customTool];
 ## Current Limitations
 
 - **Mock Calendar Data**: Calendar tool returns hardcoded mock data - integrate with Google Calendar API for production use
-- **Static Query**: The demo runs a hardcoded query - modify the messages array to process dynamic inputs
-- **Single Query**: The agent processes one query per execution - wrap in a loop for multi-turn conversations
+- **Session-Based Memory**: Conversation history is maintained per session but not persisted across restarts
 
 ## Future Improvements
 
 - [ ] Google Calendar API integration
-- [ ] Multi-turn conversation support
-- [ ] Persistent conversation history
+- [x] Multi-turn conversation support (implemented)
+- [ ] Persistent conversation history across sessions
 - [ ] Additional tools (email, weather, news feeds, etc.)
 - [ ] Custom tool marketplace
 - [ ] Rate limiting and error handling
 - [ ] Logging and observability
+- [ ] Graph visualization (code commented out in agent.js)
 
 ## Dependencies
 
